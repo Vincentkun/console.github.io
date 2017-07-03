@@ -1,4 +1,4 @@
 # console
 my github pages
 
-[page](https://consolejs.github.io/console/)
+[page](https://consolejs.github.io/sw/)
