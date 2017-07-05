@@ -14,46 +14,40 @@
     <p>可以在<a href="https://www.chromestatus.com/feature/6561526227927040">Chrome 40+</a>上运行</p>
 
     <p>
-        This sample provides some insight into the events involved in a typical service worker registration. The script <code>service-worker.js</code>        
-        is registered to handle the URL scope <code>./</code>. It is "safe" to register the same script multiple times, so
-        it's not necessary to check for a previous registration.
-        这个示例提供了一些介绍，关于事件在一个典型的sevice worker中注册的过程。脚本代码<code>service-worker.js</code>
-        脚本<代码>管理局的职员。js代码> < /注册处理URL范围<代码>。/ > < /代码。这是“安全”多次注册相同的脚本,所以它没有必要检查以前的注册。
+        这个示例提供了一些介绍，关于事件在一个典型的sevice worker中注册的过程。脚本代码<code>service-worker.js</code>代码。
+        多次注册相同的脚本是安全的,所以没有必要检查以前的注册。
     </p>
 
     <p>
-        Various pieces of information about the service worker from the perspective of the registering page can be found below. Additionally,
-        visit <code>chrome://inspect/#service-workers</code> and click on the "inspect" link below the registered
-        service worker to view logging statements for the various actions the
-        <code><a href="service-worker.js">service-worker.js</a></code> script is performing.
+        从下面的注册页面可以找到各个部分的service worker。此外,点击下面的"inspect" 链接来查看各种操作日志语句，
+        <code><a href="service-worker.js">service-worker.js</a></code> 脚本正在运行.
     </p>
 
     <div class="output">
-        <h2>Service Worker Availability</h2>
+        <h2>Service Worker 的可用性</h2>
         <p>
-            Service Workers <strong id="availability"></strong> available in your browser.
-            <em>(Whether <code>'serviceWorker' in navigator</code>.)</em>
+            Service Workers <strong id="availability"></strong> 可以在你的浏览器运行.
+            <em>(检查是否 <code>'serviceWorker' in navigator</code>.)</em>
         </p>
 
-        <h2>Is This Page Controlled by a Service Worker?</h2>
+        <h2>页面是否已经被Service Worker所控制?</h2>
         <p>
-            This page <strong id="controlled"></strong> currently controlled.
-            <em>(Whether <code>navigator.serviceWorker.controller</code> is set.)</em>
+            页面 <strong id="controlled"></strong> 当前已被控制.
+            <em>(检查是否 <code>navigator.serviceWorker.controller</code> 已经被设置.)</em>
         </p>
 
-        <h2>Info about the Current Registration</h2>
+        <h2>当前注册信息</h2>
         <p>
-            The <code>navigator.serviceWorker.register()</code> call <strong id="register"></strong>.
+             <code>navigator.serviceWorker.register()</code> 的调用 <strong id="register"></strong>.
         </p>
         <p>
-            The current registration represents the <strong id="kind"></strong> service worker.
+            当前的注册代表了<strong id="kind"></strong> service worker.
         </p>
         <p>
-            <em>Tip:</em> With a newly registered service worker in the <code>activated</code> state, refresh the page to
-            have the service worker take control. You can also refresh with the Shift key held down to load the page without
-            the service worker controlling it.
+            <em>小提示:</em>当一个新的service worker被注册后处于<code>activated</code> 激活状态时, 
+            刷新页面是service worker得到控制.当然了，你还可以刷新时按住shift键重新加载一个没有被service worker控制的页面。
         </p>
-        <p>State transitions of the service worker associated with the current registration:</p>
+        <p>当前注册的service worker的状态的转换</p>
         <ol id="states"></ol>
     </div>
 
@@ -64,23 +58,24 @@
             document.querySelector('#states').appendChild(liElement);
         }
 
+        
         if ('serviceWorker' in navigator) {
-            // The current browser supports service workers.
+            // 当前浏览器已经支持service workers.
+
             document.querySelector('#availability').textContent = 'are';
 
-            // navigator.serviceWorker.controlled iff there is currently a service worker handling
-            // requests on this page for the current navigation.
+            // 通过当前页面的navigation来检查当前是否有service worker的处理程序
+            // navigator.serviceWorker.controlled
             document.querySelector('#controlled').textContent = navigator.serviceWorker.controller ? 'is' : 'is not';
 
-            // Override the default scope of '/' with './', so that the registration applies
-            // to the current directory and everything underneath it.
+            // 使用scope属性可以用当前目录 './' 覆盖根目录 '/'，所以注册范围是当前目录和旗下的所有子目录。
             navigator.serviceWorker.register('service-worker.js', {
                 scope: './'
             }).then(function (registration) {
-                // At this point, registration has taken place.
-                // The service worker will not handle requests until this page and any
-                // other instances of this page (in other tabs, etc.) have been
-                // closed/reloaded.
+                
+                // 到这里 service worker 已经被注册
+                // 此时 service worker不会再处理任何请求，
+                // 除非这个页面或它的实例被关闭或者重新加载
                 document.querySelector('#register').textContent = 'succeeded';
 
                 var serviceWorker;
@@ -102,34 +97,17 @@
                     });
                 }
             }).catch(function (error) {
-                // Something went wrong during registration. The service-worker.js file
-                // might be unavailable or contain a syntax error.
+
+                // 在注册的时候出了问题
+                // service-worker.js 文件中存在不可用或包含语法错误
                 document.querySelector('#register').textContent = 'failed: ' + error;
             });
         } else {
-            // The current browser doesn't support service workers.
+            // 当前浏览器不支持service workers
             document.querySelector('#availability').textContent = 'are not';
         }
     </script>
 
-    <script>
-        /* jshint ignore:start */
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-53563471-1', 'auto');
-        ga('send', 'pageview');
-        /* jshint ignore:end */
-    </script>
-    <!-- Built with love using Web Starter Kit -->
 </body>
 
 </html>
