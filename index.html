@@ -6,17 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>service worker</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Service Worker 案例: 注册流程</h1>
+    <h1>Service Worker 注册过程</h1>
 
     <p>可以在<a href="https://www.chromestatus.com/feature/6561526227927040">Chrome 40+</a>上运行</p>
 
-    <p>
-        这个示例提供了一些介绍，关于事件在一个典型的sevice worker中注册的过程。脚本代码<code>service-worker.js</code>代码。
-        多次注册相同的脚本是安全的,所以没有必要检查以前的注册。
-    </p>
+    <p>这个示例提供了一些介绍，关于事件在一个典型的sevice worker中注册的过程。脚本代码<code>service-worker.js</code>代码。 多次注册相同的脚本是安全的,所以没有必要检查以前的注册。</p>
 
     <p>
         从下面的注册页面可以找到各个部分的service worker。此外,点击下面的"inspect" 链接来查看各种操作日志语句，
@@ -38,14 +36,14 @@
 
         <h2>当前注册信息</h2>
         <p>
-             <code>navigator.serviceWorker.register()</code> 的调用 <strong id="register"></strong>.
+            <code>navigator.serviceWorker.register()</code> 的调用 <strong id="register"></strong>.
         </p>
         <p>
             当前的注册代表了<strong id="kind"></strong> service worker.
         </p>
         <p>
-            <em>小提示:</em>当一个新的service worker被注册后处于<code>activated</code> 激活状态时, 
-            刷新页面是service worker得到控制.当然了，你还可以刷新时按住shift键重新加载一个没有被service worker控制的页面。
+            <em>小提示:</em>当一个新的service worker被注册后处于<code>activated</code> 激活状态时, 刷新页面是service worker得到控制.当然了，你还可以刷新时按住shift键重新加载一个没有被service
+            worker控制的页面。
         </p>
         <p>当前注册的service worker的状态的转换</p>
         <ol id="states"></ol>
@@ -58,7 +56,7 @@
             document.querySelector('#states').appendChild(liElement);
         }
 
-        
+
         if ('serviceWorker' in navigator) {
             // 当前浏览器已经支持service workers.
 
@@ -72,7 +70,7 @@
             navigator.serviceWorker.register('service-worker.js', {
                 scope: './'
             }).then(function (registration) {
-                
+
                 // 到这里 service worker 已经被注册
                 // 此时 service worker不会再处理任何请求，
                 // 除非这个页面或它的实例被关闭或者重新加载
