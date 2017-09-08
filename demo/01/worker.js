@@ -31,3 +31,16 @@ onmessage = function(event) {
 };
 
 // 计算完结果后，再把结果postMessage给主线程
+
+self.addEventListener('install', function(event) {
+	event.waitUntil(
+	  caches.open('v2').then(function(cache) {
+		return cache.addAll([
+		  '/sw/demo/01/',
+		  '/sw/demo/01/index.html',
+		  '/sw/demo/01/style.css',
+		  '/sw/demo/01/main.js'
+		]);
+	  })
+	);
+  });
