@@ -1,16 +1,17 @@
-console.log("main.js start");
 
-// 主线程先启动一个worker子线程
-var worker = new Worker("sw.js");
- 
-
-// 同时监听onmessage，取到子线程给它传递的计算结果
-worker.onmessage = function(event){
-    console.log("recieve result: " + event.data);
-};
- 
-// init number 
-var num = 10;
-
-// 把数据发给worker
-worker.postMessage(num);
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw/demo/02/worker.js', { scope: '/sw/demo/02/' }).then(function(reg) {
+  
+      if(reg.installing) {
+        console.log('Service worker installing');
+      } else if(reg.waiting) {
+        console.log('Service worker installed');
+      } else if(reg.active) {
+        console.log('Service worker active');
+      }
+  
+    }).catch(function(error) {
+      // registration failed
+      console.log('Registration failed with ' + error);
+    });
+  }
